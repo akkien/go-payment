@@ -37,7 +37,6 @@ func (app *application) PaymentSucceeded(w http.ResponseWriter, r *http.Request)
 	data["pc"] = paymentCurrency
 
 	// should write this data to session, and then redirect user to new page?
-
 	if err := app.renderTemplate(w, r, "succeeded", &templateData{
 		Data: data,
 	}); err != nil {

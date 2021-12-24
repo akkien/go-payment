@@ -59,16 +59,15 @@
 
 {{define "js"}}
     <script src="https://js.stripe.com/v3/"></script>
-    
+
     <script>
         let card;
         let stripe;
-        
-        const cardMessages = document.getElementById('card-messages');
-        const payButton = document.getElementById('pay-button');
-        const processing = document.getElementById('processing-payment');
+        const cardMessages = document.getElementById("card-messages");
+        const payButton = document.getElementById("pay-button");
+        const processing = document.getElementById("processing-payment");
 
-        stripe = Stripe({{.API}});
+        stripe = Stripe("{{index .StringMap "publishable_key"}}");
 
         function hidePayButton() {
             payButton.classList.add("d-none");
@@ -95,17 +94,17 @@
         }
 
         function val() {
-            let form = document.getElementById('charge_form');
-            if (form.checkValidity() === false){
+            let form = document.getElementById("charge_form");
+            if (form.checkValidity() === false) {
                 this.event.preventDefault();
                 this.event.stopPropagation();
-                form.classList.add('was-validated');
+                form.classList.add("was-validated");
                 return;
             }
-            form.classList.add('was-validated');
+            form.classList.add("was-validated");
             hidePayButton();
 
-            let amountToCharge = String(parseFloat(document.getElementById("amount").value)*100)
+            let amountToCharge = String(parseFloat(document.getElementById("amount").value) * 100)
             
             let payload = {
                 amount: amountToCharge,
@@ -121,7 +120,7 @@
                 body: JSON.stringify(payload),
             }
 
-            fetch("{{index .StringMap "publishable_key"}}", requestOptions)
+            fetch("{{.API}}/api/payment-intent", requestOptions)
                 .then(response => response.text())
                 .then(response => {
                     let data;
@@ -160,28 +159,27 @@
                 })
         }
 
-        (function(){
+        (function() {
             // create stripe & elements
             const elements = stripe.elements();
             const style = {
                 base: {
                     fontSize: '16px',
-                    lineHeight: '24px',
+                    lineHeight: '24px'
                 }
             };
 
             // create card entry
             card = elements.create('card', {
-                style,
+                style: style,
                 hidePostalCode: true,
             });
-
-            card.mount('#card-element');
+            card.mount("#card-element");
 
             // check for input errors
-            card.addEventListener('change', function(event){
-                var displayError = document.getElementById('card-errors');
-                if(event.error){
+            card.addEventListener('change', function(event) {
+                var displayError = document.getElementById("card-errors");
+                if (event.error) {
                     displayError.classList.remove('d-none');
                     displayError.textContent = event.error.message;
                 } else {
