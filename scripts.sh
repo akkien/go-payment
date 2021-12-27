@@ -1,0 +1,1 @@
+docker run -d -p 3306:3306 --name go-mariadb -v /home/akkien/Documents/Laptrinh/Udemy/Golang/marketplace:/var/lib/mysql -e MARIADB_USER=gostripe -e MARIADB_PASSWORD=gostripepw -e MARIADB_ROOT_PASSWORD=rootpw  mariadb
