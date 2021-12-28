@@ -137,12 +137,18 @@ func (m *DBModel) InsertTransaction(txn Transaction) (int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
+	// stmt := `
+	// 	insert into transactions
+	// 		(amount, currency, last_four, bank_return_code, expiry_month, expiry_year,
+	// 			payment_intent, payment_method,
+	// 		transaction_status_id, created_at, updated_at)
+	// 	values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+	// `
 	stmt := `
 		insert into transactions
-			(amount, currency, last_four, bank_return_code, expiry_month, expiry_year,
-				payment_intent, payment_method,
+			(amount, currency, last_four, bank_return_code,
 			transaction_status_id, created_at, updated_at)
-		values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		values (?, ?, ?, ?, ?, ?, ?)
 	`
 
 	result, err := m.DB.ExecContext(ctx, stmt,
@@ -150,10 +156,10 @@ func (m *DBModel) InsertTransaction(txn Transaction) (int, error) {
 		txn.Currency,
 		txn.LastFour,
 		txn.BankReturnCode,
-		txn.ExpiryMonth,
-		txn.ExpiryYear,
-		txn.PaymentIntent,
-		txn.PaymentMethod,
+		// txn.ExpiryMonth,
+		// txn.ExpiryYear,
+		// txn.PaymentIntent,
+		// txn.PaymentMethod,
 		txn.TransactionStatusID,
 		time.Now(),
 		time.Now(),
