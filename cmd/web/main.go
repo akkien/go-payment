@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/gob"
 	"flag"
 	"fmt"
 	"github/akkien/go-stripe/internal/driver"
@@ -59,6 +60,7 @@ func (app *application) serve() error {
 }
 
 func main() {
+	gob.Register(TransactionData{})
 	var cfg config
 
 	flag.IntVar(&cfg.port, "port", 5000, "Server port to listen on")
