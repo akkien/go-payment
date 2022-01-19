@@ -1,0 +1,2 @@
+drop_column("transactions", "is_recurring")
+drop_column("transactions", "plan_id")
