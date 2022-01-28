@@ -128,20 +128,6 @@ func (app *application) CreateCustomerAndSubscribeToPlan(w http.ResponseWriter, 
 	var subscription *stripe.Subscription
 	txnMsg := "Transaction successful"
 
-	// resp := jsonResponse{
-	// 	OK:      okay,
-	// 	Message: txnMsg,
-	// }
-
-	// out, err := json.MarshalIndent(resp, "", "   ")
-	// if err != nil {
-	// 	app.errorLog.Println(err)
-	// 	return
-	// }
-
-	// w.Header().Set("Content-Type", "application/json")
-	// w.Write(out)
-
 	stripeCustomer, msg, err := card.CreateCustomer(data.PaymentMethod, data.Email)
 	if err != nil {
 		app.errorLog.Println(err)
