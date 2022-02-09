@@ -10,6 +10,7 @@ require (
 )
 
 require (
+	github.com/alexedwards/scs/mysqlstore v0.0.0-20220131182346-524f06e83c3c // indirect
 	github.com/alexedwards/scs/v2 v2.5.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/stretchr/testify v1.7.0 // indirect
